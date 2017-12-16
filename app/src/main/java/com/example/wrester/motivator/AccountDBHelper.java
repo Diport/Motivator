@@ -28,6 +28,8 @@ public class AccountDBHelper extends SQLiteOpenHelper {
                 + "id integer primary key autoincrement,"
                 + "name string,"
                 + "description string,"
+                + "raitingUp integer,"
+                + "rairingDown integer,"
                 + "pointsUp integer,"
                 + "pointsDown integer" + ");");
     }

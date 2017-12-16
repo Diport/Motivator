@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         points.setText(Points.toString());
     }
 
-    public void onClick (View V) {
+    public void onClickAddTask (View V) {
         Intent intent = new Intent(MainActivity.this,AddTaskActivity.class);
         intent.putExtra("username", Username);
         startActivity(intent);

@@ -6,12 +6,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class AddTaskActivity extends AppCompatActivity {
 
     String Username;
     AccountDBHelper accountDBHelper;
     EditText Description;
+    EditText Points;
+    EditText Raiting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +25,29 @@ public class AddTaskActivity extends AppCompatActivity {
         Username = getIntent().getStringExtra("username");
     }
 
-    public void onClick (View V) //Запись задачи в БД
+    public void onClickAdd (View V) //Запись задачи в БД
     {
         final ContentValues cv = new ContentValues();
         final SQLiteDatabase UserDataBase = accountDBHelper.getWritableDatabase();
-
         Description = (EditText)findViewById(R.id.descriptionText);
-        cv.put("name",Username);
-        cv.put("description",Description.toString());
-        UserDataBase.insert("tasks",null,cv);
+        Points = (EditText)findViewById(R.id.pointsText);
+        Raiting = (EditText)findViewById(R.id.raitingText);
+
+        if(Points.getText().toString()==""||Raiting.getText().toString()=="")
+            Toast.makeText(AddTaskActivity.this,"Пожалуйста зполните поля очков и рейтинга",Toast.LENGTH_LONG).show();
+        else {
+            cv.put("name", Username);
+            cv.put("description", Description.toString());
+            cv.put("raitingUp", Raiting.toString());
+            cv.put("rairingDown", Raiting.toString());
+            cv.put("pointsUp", Points.toString());
+            cv.put("pointsDown", Points.toString());
+            UserDataBase.insert("tasks", null, cv);
+        }
+    }
+
+    public void onClickCancel (View V) //Отмена
+    {
+
     }
 }
