@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
 
-        if(!name.getText().toString().equals("")) {
+        if(!name.getText().toString().isEmpty()) {
             //Делаем запрос имени пользователя
             Cursor c = UserDataBase.query(
                     "mytable",
