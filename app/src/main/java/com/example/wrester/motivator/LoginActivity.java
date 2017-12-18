@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         final SQLiteDatabase UserDataBase = accountDBHelper.getWritableDatabase();
 
         UserDataBase.delete( "mytable",null,null); //ОТЛАДКА
-       // UserDataBase.delete( "tasks",null,null); //ОТЛАДКА
+       // UserDataBase.delete( "tasklist",null,null); //ОТЛАДКА
 
         AlertDialog.Builder a_build = new AlertDialog.Builder(LoginActivity.this);
         a_build.setMessage("Данного профиля не существует. Создать новый?")
@@ -58,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                                 intent.putExtra("username", UserQuery.getString(UserQuery.getColumnIndex("name")));
                                 intent.putExtra("userraiting", UserQuery.getInt(UserQuery.getColumnIndex("raiting")));
                                 intent.putExtra("userpoints", UserQuery.getInt(UserQuery.getColumnIndex("points")));
+                                accountDBHelper.close();
                                 startActivity(intent);
                             }
                         }
@@ -103,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
             intent.putExtra("username", UserQuery.getString(UserQuery.getColumnIndex("name")));
             intent.putExtra("userraiting", UserQuery.getInt(UserQuery.getColumnIndex("raiting")));
             intent.putExtra("userpoints", UserQuery.getInt(UserQuery.getColumnIndex("points")));
+            accountDBHelper.close();
             startActivity(intent);
            }
         }

@@ -24,7 +24,7 @@ public class AccountDBHelper extends SQLiteOpenHelper {
                 + "raiting integer,"
                 + "points integer" + ");");
 
-        sqLiteDatabase.execSQL("create table tasks ("
+        sqLiteDatabase.execSQL("create table tasklist ("
                 + "id integer primary key autoincrement,"
                 + "name string,"
                 + "description string,"

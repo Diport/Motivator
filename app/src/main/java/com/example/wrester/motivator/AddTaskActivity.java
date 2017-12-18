@@ -44,7 +44,7 @@ public class AddTaskActivity extends AppCompatActivity {
             cv.put("rairingDown", Raiting.toString());
             cv.put("pointsUp", Points.toString());
             cv.put("pointsDown", Points.toString());
-            UserDataBase.insert("tasks", null, cv);
+            UserDataBase.insert("tasklist", null, cv);
             finish();
         }
     }
