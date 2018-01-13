@@ -4,30 +4,29 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by Wrester on 08.12.2017.
- */
-
-//Помощник по созданию БД. Проверяет БД на сущетвование и актуальность версии.
-//Использует ссответствующий метод для поправки значений.
-
 public class AccountDBHelper extends SQLiteOpenHelper {
 
+    public static final int DB_VERSION = 2;
+    public static final String FIRST_TABLE_NAME = "mytable";
+    public static final String SECOND_TABLE_NAME = "tasklist";
+
     public AccountDBHelper(Context context) {
-        super(context, "UserDB", null, 1);
+        super(context, "UserDB", null, DB_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table mytable ("
-                + "name string primary key,"
+        sqLiteDatabase.execSQL("create table " + FIRST_TABLE_NAME + "("
+                + "name text primary key,"
+                + "password text,"
                 + "raiting integer,"
-                + "points integer" + ");");
+                + "points integer"
+                 + ");");
 
-        sqLiteDatabase.execSQL("create table tasklist ("
+        sqLiteDatabase.execSQL("create table " + SECOND_TABLE_NAME + "("
                 + "id integer primary key autoincrement,"
-                + "name string,"
-                + "description string,"
+                + "name text,"
+                + "description text,"
                 + "raitingUp integer,"
                 + "rairingDown integer,"
                 + "pointsUp integer,"
@@ -36,6 +35,8 @@ public class AccountDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
+        sqLiteDatabase.execSQL("drop table if exists "+ FIRST_TABLE_NAME);
+        sqLiteDatabase.execSQL("drop table if exists "+ SECOND_TABLE_NAME);
+        onCreate(sqLiteDatabase);
     }
 }

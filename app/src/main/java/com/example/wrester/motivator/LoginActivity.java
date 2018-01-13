@@ -27,11 +27,12 @@ public class LoginActivity extends AppCompatActivity {
     public void MyClick(View V)
     {
         final EditText name = findViewById(R.id.Name);
+        final EditText password = findViewById(R.id.Password);
         final ContentValues cv = new ContentValues();
         final SQLiteDatabase UserDataBase = accountDBHelper.getWritableDatabase();
 
-        UserDataBase.delete( "mytable",null,null); //ОТЛАДКА
-       // UserDataBase.delete( "tasklist",null,null); //ОТЛАДКА
+        //UserDataBase.delete( "mytable",null,null); //ОТЛАДКА
+        //UserDataBase.delete( "tasklist",null,null); //ОТЛАДКА
 
         AlertDialog.Builder a_build = new AlertDialog.Builder(LoginActivity.this);
         a_build.setMessage("Данного профиля не существует. Создать новый?")
@@ -39,9 +40,10 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i)
                             {
+                                cv.put("name", name.getText().toString());
+                                cv.put("password", password.getText().toString());
                                 cv.put("raiting",0);
                                 cv.put("points",1500);
-                                cv.put("name", name.getText().toString());
                                 UserDataBase.insert("mytable",null, cv);
 
                                 Cursor UserQuery = UserDataBase.query(
@@ -58,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                                 intent.putExtra("username", UserQuery.getString(UserQuery.getColumnIndex("name")));
                                 intent.putExtra("userraiting", UserQuery.getInt(UserQuery.getColumnIndex("raiting")));
                                 intent.putExtra("userpoints", UserQuery.getInt(UserQuery.getColumnIndex("points")));
+                                UserQuery.close();
                                 accountDBHelper.close();
                                 startActivity(intent);
                             }
@@ -72,9 +75,9 @@ public class LoginActivity extends AppCompatActivity {
 
         if(!name.getText().toString().isEmpty()) {
             //Делаем запрос имени пользователя
-            Cursor c = UserDataBase.query(
+            Cursor UserQuery = UserDataBase.query(
                     "mytable",
-                    new String[]{"name"},
+                    null,
                     "name == ?",
                     new String[]{name.getText().toString()},
                     null,
@@ -83,27 +86,21 @@ public class LoginActivity extends AppCompatActivity {
             //--------------------------------
 
             //Проверка на null
-            if(!c.moveToFirst()) {
+            if(!UserQuery.moveToFirst()) {
                 //Предложене создать профиль
                 AlertDialog alertDialog = a_build.create();
                 alertDialog.show();
             }
 
-           else {
-                Cursor UserQuery = UserDataBase.query(
-                   "mytable",
-                   null,
-                   "name == ?",
-                   new String[]{ name.getText().toString()},
-                   null,
-                   null,
-                   null);
-           UserQuery.moveToFirst();
+            else if(UserQuery.moveToFirst() && !UserQuery.getString(UserQuery.getColumnIndex("password")).equals(password.getText().toString()))
+                Toast.makeText(LoginActivity.this,"Неправильно введён пароль. Повторите попытку",Toast.LENGTH_SHORT).show();
 
+           else {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("username", UserQuery.getString(UserQuery.getColumnIndex("name")));
             intent.putExtra("userraiting", UserQuery.getInt(UserQuery.getColumnIndex("raiting")));
             intent.putExtra("userpoints", UserQuery.getInt(UserQuery.getColumnIndex("points")));
+            UserQuery.close();
             accountDBHelper.close();
             startActivity(intent);
            }
