@@ -31,9 +31,10 @@ public class LoginActivity extends AppCompatActivity {
         final ContentValues cv = new ContentValues();
         final SQLiteDatabase UserDataBase = accountDBHelper.getWritableDatabase();
 
-        //UserDataBase.delete( "mytable",null,null); //ОТЛАДКА
-        //UserDataBase.delete( "tasklist",null,null); //ОТЛАДКА
+        UserDataBase.delete( "mytable",null,null); //ОТЛАДКА
+        UserDataBase.delete( "tasklist",null,null); //ОТЛАДКА
 
+        //===============================================================================================================================
         AlertDialog.Builder a_build = new AlertDialog.Builder(LoginActivity.this);
         a_build.setMessage("Данного профиля не существует. Создать новый?")
                 .setPositiveButton("ДА", new DialogInterface.OnClickListener() {
@@ -72,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                         dialogInterface.cancel();
                     }
                 });
+        //===============================================================================================================================
 
         if(!name.getText().toString().isEmpty()) {
             //Делаем запрос имени пользователя
