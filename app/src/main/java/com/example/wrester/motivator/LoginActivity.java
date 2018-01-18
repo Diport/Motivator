@@ -24,7 +24,7 @@ public class LoginActivity extends AppCompatActivity {
         accountDBHelper = new AccountDBHelper(this); //Инициализируем БД
     }
 
-    public void MyClick(View V)
+    public void LoginClick(View V)
     {
         final EditText name = findViewById(R.id.Name);
         final EditText password = findViewById(R.id.Password);
@@ -55,12 +55,13 @@ public class LoginActivity extends AppCompatActivity {
                                         null,
                                         null,
                                         null);
-                                UserQuery.moveToFirst();
 
+                                UserQuery.moveToFirst();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("username", UserQuery.getString(UserQuery.getColumnIndex("name")));
                                 intent.putExtra("userraiting", UserQuery.getInt(UserQuery.getColumnIndex("raiting")));
                                 intent.putExtra("userpoints", UserQuery.getInt(UserQuery.getColumnIndex("points")));
+
                                 UserQuery.close();
                                 accountDBHelper.close();
                                 startActivity(intent);
@@ -75,7 +76,9 @@ public class LoginActivity extends AppCompatActivity {
                 });
         //===============================================================================================================================
 
-        if(!name.getText().toString().isEmpty()) {
+        //Проверка на пустые поля логина и пароля
+        if(!name.getText().toString().isEmpty()&& !password.getText().toString().isEmpty()) {
+
             //Делаем запрос имени пользователя
             Cursor UserQuery = UserDataBase.query(
                     "mytable",
@@ -85,28 +88,42 @@ public class LoginActivity extends AppCompatActivity {
                     null,
                     null,
                     null);
-            //--------------------------------
 
-            //Проверка на null
+
+            //Если аккаунта с таким логином не существует
             if(!UserQuery.moveToFirst()) {
                 //Предложене создать профиль
                 AlertDialog alertDialog = a_build.create();
                 alertDialog.show();
             }
 
+            //Если аккаунт с таким логином существует то делаем проверку на правильность введёного пароля
             else if(UserQuery.moveToFirst() && !UserQuery.getString(UserQuery.getColumnIndex("password")).equals(password.getText().toString()))
                 Toast.makeText(LoginActivity.this,"Неправильно введён пароль. Повторите попытку",Toast.LENGTH_SHORT).show();
 
+            //Если всё корректно:
            else {
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.putExtra("username", UserQuery.getString(UserQuery.getColumnIndex("name")));
             intent.putExtra("userraiting", UserQuery.getInt(UserQuery.getColumnIndex("raiting")));
             intent.putExtra("userpoints", UserQuery.getInt(UserQuery.getColumnIndex("points")));
+
             UserQuery.close();
             accountDBHelper.close();
             startActivity(intent);
            }
         }
-        else { Toast.makeText(LoginActivity.this,"Необходимо вветси имя пользователя",Toast.LENGTH_LONG).show(); }
+
+        //Обработчики пустых строк
+        else {
+                if(name.getText().toString().isEmpty() && password.getText().toString().isEmpty())
+                    Toast.makeText(LoginActivity.this,"Необходимо вветси имя пользователя и пароль",Toast.LENGTH_LONG).show();
+
+                else if (name.getText().toString().isEmpty())
+                    Toast.makeText(LoginActivity.this,"Необходимо вветси имя пользователя",Toast.LENGTH_LONG).show();
+
+                else if(password.getText().toString().isEmpty())
+                    Toast.makeText(LoginActivity.this,"Необходимо вветси пароль",Toast.LENGTH_LONG).show();
+            }
     }
 }

@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                                 SQLiteDatabase DB = dbHelper.getWritableDatabase();
 
                                 DB.delete( "mytable","name = ?",new String[]{Username});
-                                DB.delete( "tasklist","name = ?",new String[]{Username});
+                                DB.delete( "tasklist","username = ?",new String[]{Username});
 
                                 DB.close();
                                 finish();

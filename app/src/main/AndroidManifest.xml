@@ -18,10 +18,7 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".AddTaskActivity" />
-        <activity
-            android:name=".ScrollingActivity"
-            android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".TaskViev"></activity>
     </application>
 
 </manifest>

@@ -6,7 +6,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class AccountDBHelper extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 3;
     public static final String FIRST_TABLE_NAME = "mytable";
     public static final String SECOND_TABLE_NAME = "tasklist";
 
@@ -25,7 +25,8 @@ public class AccountDBHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL("create table " + SECOND_TABLE_NAME + "("
                 + "id integer primary key autoincrement,"
-                + "name text,"
+                + "username text,"
+                + "title text,"
                 + "description text,"
                 + "raitingUp integer,"
                 + "rairingDown integer,"
