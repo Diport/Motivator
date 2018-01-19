@@ -36,12 +36,12 @@ public class AddTaskActivity extends AppCompatActivity {
         if(Points.getText().toString().isEmpty()  || Raiting.getText().toString().isEmpty())
             Toast.makeText(AddTaskActivity.this,"Пожалуйста зполните поля очков и рейтинга",Toast.LENGTH_LONG).show();
         else {
-            cv.put("name", Username);
-            cv.put("title", Title.toString());
-            cv.put("raitingUp", Raiting.toString());
-            cv.put("rairingDown", Raiting.toString());
-            cv.put("pointsUp", Points.toString());
-            cv.put("pointsDown", Points.toString());
+            cv.put("username", Username);
+            cv.put("title", Title.getText().toString());
+            cv.put("raitingUp", Raiting.getText().toString());
+            cv.put("rairingDown", Raiting.getText().toString());
+            cv.put("pointsUp", Points.getText().toString());
+            cv.put("pointsDown", Points.getText().toString());
             UserDataBase.insert("tasklist", null, cv);
 
             UserDataBase.close();

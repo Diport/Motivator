@@ -40,6 +40,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onClickShowTasks (View V) {
+        Intent intent = new Intent(MainActivity.this,TaskViev.class);
+        intent.putExtra("username", Username);
+        startActivity(intent);
+    }
+
     public void ocClickDeleteAccount(View V){
         //===============================================================================================================================
         AlertDialog.Builder a_build = new AlertDialog.Builder(MainActivity.this);
