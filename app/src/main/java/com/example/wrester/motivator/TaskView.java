@@ -1,5 +1,6 @@
 package com.example.wrester.motivator;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +10,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class TaskViev extends AppCompatActivity implements View.OnClickListener {
+public class TaskView extends AppCompatActivity implements View.OnClickListener {
 
     LinearLayout LayoutBox;
     String Username;
@@ -20,7 +20,7 @@ public class TaskViev extends AppCompatActivity implements View.OnClickListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_viev);
+        setContentView(R.layout.activity_task_view);
 
         LayoutBox = findViewById(R.id.L_Box);
         Username = getIntent().getStringExtra("username");
@@ -35,6 +35,7 @@ public class TaskViev extends AppCompatActivity implements View.OnClickListener 
     private Button[] GetUserTasks(String username) {
         SQLiteDatabase DB = dbHelper.getReadableDatabase();
         ArrayList<Button> res= new ArrayList<>();
+
         Cursor TasksQuery = DB.query(
                 AccountDBHelper.SECOND_TABLE_NAME,
                 new String[]{"id","title"},
@@ -49,7 +50,7 @@ public class TaskViev extends AppCompatActivity implements View.OnClickListener 
                Button btn = new Button(this);
                btn.setId(TasksQuery.getInt(TasksQuery.getColumnIndex("id")));
                btn.setText(TasksQuery.getString(TasksQuery.getColumnIndex("title")));
-               //btn.setOnClickListener(this);
+               btn.setOnClickListener(this);
                res.add(btn);
            } while (TasksQuery.moveToNext());
         }
@@ -60,9 +61,10 @@ public class TaskViev extends AppCompatActivity implements View.OnClickListener 
         return res.toArray(new Button[res.size()]);
     }
 
-    public void onClick(View V)
-    {
-       SQLiteDatabase DB = dbHelper.getReadableDatabase();
-       int identificator = V.getId();
+    public void onClick(View V) {
+        int identificator = V.getId();
+        Intent intent = new Intent(this,ShowDetailsOfTaskActivity.class);
+        intent.putExtra("identificator",identificator);
+        startActivity(intent);
     }
 }
