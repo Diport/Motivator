@@ -31,8 +31,10 @@ public class LoginActivity extends AppCompatActivity {
         final ContentValues cv = new ContentValues();
         final SQLiteDatabase UserDataBase = accountDBHelper.getWritableDatabase();
 
-        UserDataBase.delete( "mytable",null,null); //ОТЛАДКА
-        UserDataBase.delete( "tasklist",null,null); //ОТЛАДКА
+        //===============================================================================================================================
+        UserDataBase.delete( AccountDBHelper.FIRST_TABLE_NAME,null,null); //ОТЛАДКА
+        UserDataBase.delete( AccountDBHelper.SECOND_TABLE_NAME,null,null); //ОТЛАДКА
+        //===============================================================================================================================
 
         //===============================================================================================================================
         AlertDialog.Builder a_build = new AlertDialog.Builder(LoginActivity.this);

@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onClickShowTasks (View V) {
-        Intent intent = new Intent(MainActivity.this,TaskView.class);
+        Intent intent = new Intent(MainActivity.this,TaskViewActivity.class);
         intent.putExtra("username", Username);
         startActivity(intent);
     }

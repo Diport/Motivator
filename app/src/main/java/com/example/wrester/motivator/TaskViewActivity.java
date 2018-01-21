@@ -5,13 +5,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-public class TaskView extends AppCompatActivity implements View.OnClickListener {
+public class TaskViewActivity extends AppCompatActivity implements View.OnClickListener {
 
     LinearLayout LayoutBox;
     String Username;
@@ -21,9 +22,18 @@ public class TaskView extends AppCompatActivity implements View.OnClickListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_view);
-
         LayoutBox = findViewById(R.id.L_Box);
         Username = getIntent().getStringExtra("username");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Refresh();
+    }
+
+    private void Refresh() {
+        LayoutBox.removeAllViews();
         Button[] TArr = GetUserTasks(Username);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams
                 (LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
