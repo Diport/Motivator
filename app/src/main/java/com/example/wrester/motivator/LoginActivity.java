@@ -32,8 +32,8 @@ public class LoginActivity extends AppCompatActivity {
         final SQLiteDatabase UserDataBase = accountDBHelper.getWritableDatabase();
 
         //===============================================================================================================================
-        UserDataBase.delete( AccountDBHelper.FIRST_TABLE_NAME,null,null); //ОТЛАДКА
-        UserDataBase.delete( AccountDBHelper.SECOND_TABLE_NAME,null,null); //ОТЛАДКА
+        //UserDataBase.delete( AccountDBHelper.FIRST_TABLE_NAME,null,null); //ОТЛАДКА
+        //UserDataBase.delete( AccountDBHelper.SECOND_TABLE_NAME,null,null); //ОТЛАДКА
         //===============================================================================================================================
 
         //===============================================================================================================================

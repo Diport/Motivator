@@ -75,6 +75,8 @@ public class AddTaskActivity extends AppCompatActivity {
 
             if (Points.getText().toString().isEmpty() || Raiting.getText().toString().isEmpty())
                 Toast.makeText(AddTaskActivity.this, "Пожалуйста зполните поля очков и рейтинга", Toast.LENGTH_LONG).show();
+            else if(Title.getText().toString().isEmpty())
+                Toast.makeText(AddTaskActivity.this, "Пожалуйста введите название задачи", Toast.LENGTH_LONG).show();
             else {
                 cv.put("username", Username);
                 cv.put("title", Title.getText().toString());
@@ -98,6 +100,8 @@ public class AddTaskActivity extends AppCompatActivity {
 
             if (Points.getText().toString().isEmpty() || Raiting.getText().toString().isEmpty())
                 Toast.makeText(AddTaskActivity.this, "Пожалуйста зполните поля очков и рейтинга", Toast.LENGTH_LONG).show();
+            else if(Title.getText().toString().isEmpty())
+                Toast.makeText(AddTaskActivity.this, "Пожалуйста введите название задачи", Toast.LENGTH_LONG).show();
             else {
                 cv.put("title", Title.getText().toString());
                 cv.put("raitingUp", Raiting.getText().toString());
